@@ -2,7 +2,7 @@ import swagger from "@elysiajs/swagger";
 import { Elysia, t } from "elysia";
 import db from "./db";
 import { commentTable } from "./db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { createSelectSchema } from "drizzle-typebox";
 import {cors} from "@elysiajs/cors"
 
@@ -38,7 +38,7 @@ const app = new Elysia()
                 })
               })
               .get("/", async () => {
-                const data = await db.select().from(commentTable);
+                const data = await db.select().from(commentTable).orderBy(desc(commentTable.created_at));
                 return {
                   status: 200,
                   message: "Sucess get comments",
