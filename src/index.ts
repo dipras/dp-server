@@ -4,9 +4,13 @@ import db from "./db";
 import { commentTable } from "./db/schema";
 import { eq } from "drizzle-orm";
 import { createSelectSchema } from "drizzle-typebox";
+import {cors} from "@elysiajs/cors"
 
 const _comment = createSelectSchema(commentTable);
 const app = new Elysia()
+            .use(cors({
+              origin: "*"
+            }))
             .use(swagger())
             .get("/", () => "Hello Elysia")
             .group("/comment", app => 
